@@ -13,7 +13,7 @@ export default {
     backgroundColor: "#ffffff"
   },
   ios: {
-    bundleIdentifier: "com.yourname.cfbpickem",
+    bundleIdentifier: "com.invictus2347.cfbpickem",
     supportsTablet: false
   },
   android: {
