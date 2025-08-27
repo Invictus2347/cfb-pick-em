@@ -1,10 +1,13 @@
+import React, { useEffect, useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { supabase } from '@/lib/supabase';
+import type { Session } from '@supabase/supabase-js';
+import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 
 import { useColorScheme } from '@/components/useColorScheme';
 
@@ -42,17 +45,40 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <AuthProvider>
+      <RootLayoutNav />
+    </AuthProvider>
+  );
 }
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const { isAuthenticated, loading } = useAuth();
+
+  // Show loading screen while checking auth state
+  if (loading) {
+    return null; // Or a loading component
+  }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        {isAuthenticated ? (
+          <>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          </>
+        ) : (
+          <Stack.Screen 
+            name="signin" 
+            options={{ 
+              headerShown: false,
+              // Prevent going back to tabs when not authenticated
+              gestureEnabled: false,
+            }} 
+          />
+        )}
       </Stack>
     </ThemeProvider>
   );
