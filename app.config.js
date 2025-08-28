@@ -32,12 +32,15 @@ export default {
     policy: "appVersion" 
   },
   updates: { 
-    url: "https://u.expo.dev/REPLACE_WITH_EAS_PROJECT_ID" 
+    url: "https://u.expo.dev/d4352bb1-e4d8-44d1-ba7b-532b8c38e98a" 
   },
   extra: {
     env: process.env.APP_ENV,
     supabaseUrl: process.env.SUPABASE_URL,
-    supabaseAnonKey: process.env.SUPABASE_ANON_KEY
+    supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+    eas: {
+      projectId: "d4352bb1-e4d8-44d1-ba7b-532b8c38e98a"
+    }
   },
   plugins: [
     "expo-router",
