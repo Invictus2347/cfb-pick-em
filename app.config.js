@@ -14,7 +14,10 @@ export default {
   },
   ios: {
     bundleIdentifier: "com.invictus2347.cfbpickem",
-    supportsTablet: false
+    supportsTablet: false,
+    infoPlist: {
+      ITSAppUsesNonExemptEncryption: false
+    }
   },
   android: {
     adaptiveIcon: {
